@@ -16,7 +16,7 @@
 
 #pragma once
 
-#ifdef RGBLIGHT_ENABLE
+/*#ifdef RGBLIGHT_ENABLE
 #    define RGBLIGHT_EFFECT_BREATHING
 #    define RGBLIGHT_EFFECT_RAINBOW_MOOD
 #    define RGBLIGHT_EFFECT_RAINBOW_SWIRL
@@ -33,8 +33,10 @@
 #    ifndef RGBLIGHT_LIMIT_VAL
 #    	define RGBLIGHT_LIMIT_VAL 150
 #    endif
-#endif
+#endif */
 
 #define LED_CAPS_LOCK_PIN 24
 #define LED_PIN_ON_STATE 0
+
+#define BOTH_SHIFTS_TURNS_ON_CAPS_WORD
 
