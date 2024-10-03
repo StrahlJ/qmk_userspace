@@ -18,9 +18,6 @@
 
 enum layers {
     _QWERTZ = 0,
-    _UML,
-//    _DVORAK,
-//    _COLEMAK_DH,
     _NAV,
     _SYM,
     _FUNCTION,
@@ -30,9 +27,6 @@ enum layers {
 
 // Aliases for readability
 #define QWERTZ   DF(_QWERTZ)
-//#define COLEMAK  DF(_COLEMAK_DH)
-//#define DVORAK   DF(_DVORAK)
-#define UML		 MO(_UML)
 #define SYM      MO(_SYM)
 #define NAV      MO(_NAV)
 #define FKEYS    MO(_FUNCTION)
@@ -67,50 +61,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      KC_TAB  , DE_Q ,  DE_W   ,  DE_E  ,   DE_R ,   DE_T ,                                        DE_Z,    DE_U ,  DE_I ,   DE_O ,  DE_P , KC_BSPC,
      CTL_ESC , DE_A ,  DE_S   ,  DE_D  ,   DE_F ,   DE_G ,                                        DE_H,    DE_J ,  DE_K ,   DE_L ,DE_ODIA, DE_ADIA,
      KC_LSFT , DE_Y ,  DE_X   ,  DE_C  ,   DE_V ,   DE_B , DE_LBRC,KC_CAPS,     FKEYS  , DE_RBRC, DE_N,    DE_M ,DE_COMM, DE_DOT ,DE_MINS, KC_RSFT,
-                                 UML , KC_LGUI, ALT_ENT, KC_SPC , NAV   ,       SYM    , KC_SPC , KC_RALT, KC_RGUI, KC_APP
+                                 _______ , KC_LGUI, ALT_ENT, KC_SPC , NAV   ,       SYM    , KC_SPC , KC_RALT, KC_RGUI, KC_APP
     ),
 
-/*
- * Base Layer: Dvorak
- *
- * ,-------------------------------------------.                              ,-------------------------------------------.
- * |  Tab   | ' "  | , <  | . >  |   P  |   Y  |                              |   F  |   G  |   C  |   R  |   L  |  Bksp  |
- * |--------+------+------+------+------+------|                              |------+------+------+------+------+--------|
- * |Ctrl/Esc|   A  |   O  |   E  |   U  |   I  |                              |   D  |   H  |   T  |   N  |   S  |Ctrl/- _|
- * |--------+------+------+------+------+------+-------------.  ,-------------+------+------+------+------+------+--------|
- * | LShift | ; :  |   Q  |   J  |   K  |   X  | [ {  |CapsLk|  |F-keys|  ] } |   B  |   M  |   W  |   V  |   Z  | RShift |
- * `----------------------+------+------+------+------+------|  |------+------+------+------+------+----------------------'
- *                        |Adjust| LGUI | LAlt/| Space| Nav  |  | Sym  | Space| AltGr| RGUI | Menu |
- *                        |      |      | Enter|      |      |  |      |      |      |      |      |
- *                        `----------------------------------'  `----------------------------------'
- */
-    [_UML] = LAYOUT(
-     _______ , _______,  _______, _______, _______ ,   _______ ,                                        _______,   DE_UDIA ,  _______ ,   DE_ODIA ,  _______ , _______,
-     _______ , DE_ADIA,   DE_SS, _______, _______ ,   _______ ,                                        _______,   _______ ,  _______ ,   _______ ,  _______ , _______,
-     _______ , _______, _______ , _______, _______ ,   _______ , _______,_______,     _______  , _______, _______,   _______ ,  _______ ,   _______ ,  _______ , _______,
-                       _______ , _______, _______, _______ , _______   ,     _______    , _______ ,_______, _______, _______
-    ),
-/*
- * Base Layer: Colemak DH
- *
- * ,-------------------------------------------.                              ,-------------------------------------------.
- * |  Tab   |   Q  |   W  |   F  |   P  |   B  |                              |   J  |   L  |   U  |   Y  | ;  : |  Bksp  |
- * |--------+------+------+------+------+------|                              |------+------+------+------+------+--------|
- * |Ctrl/Esc|   A  |   R  |   S  |   T  |   G  |                              |   M  |   N  |   E  |   I  |   O  |Ctrl/' "|
- * |--------+------+------+------+------+------+-------------.  ,-------------+------+------+------+------+------+--------|
- * | LShift |   Z  |   X  |   C  |   D  |   V  | [ {  |CapsLk|  |F-keys|  ] } |   K  |   H  | ,  < | . >  | /  ? | RShift |
- * `----------------------+------+------+------+------+------|  |------+------+------+------+------+----------------------'
- *                        |Adjust| LGUI | LAlt/| Space| Nav  |  | Sym  | Space| AltGr| RGUI | Menu |
- *                        |      |      | Enter|      |      |  |      |      |      |      |      |
- *                        `----------------------------------'  `----------------------------------'
- *//*
-    [_COLEMAK_DH] = LAYOUT(
-     KC_TAB  , KC_Q ,  KC_W   ,  KC_F  ,   KC_P ,   KC_B ,                                        KC_J,   KC_L ,  KC_U ,   KC_Y ,KC_SCLN, KC_BSPC,
-     CTL_ESC , KC_A ,  KC_R   ,  KC_S  ,   KC_T ,   KC_G ,                                        KC_M,   KC_N ,  KC_E ,   KC_I ,  KC_O , CTL_QUOT,
-     KC_LSFT , KC_Z ,  KC_X   ,  KC_C  ,   KC_D ,   KC_V , KC_LBRC,KC_CAPS,     FKEYS  , KC_RBRC, KC_K,   KC_H ,KC_COMM, KC_DOT ,KC_SLSH, KC_RSFT,
-                                 ADJUST, KC_LGUI, ALT_ENT, KC_SPC , NAV   ,     SYM    , KC_SPC ,KC_RALT, KC_RGUI, KC_APP
-    ),
-*/
 /*
  * Nav Layer: Media, navigation
  *
@@ -246,9 +199,6 @@ bool oled_task_user(void) {
             case _QWERTZ:
                 oled_write_P(PSTR("QWERTZ\n"), false);
                 break;
-            case _UML:
-            	oled_write_P(PSTR("UMLAUT\n"), false);
-            	break;
             case _NAV:
                 oled_write_P(PSTR("Nav\n"), false);
                 break;
