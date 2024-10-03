@@ -58,10 +58,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *                        `----------------------------------'  `----------------------------------'
  */
     [_QWERTZ] = LAYOUT(
-     KC_TAB  , DE_Q ,  DE_W   ,  DE_E  ,   DE_R ,   DE_T ,                                        DE_Z,    DE_U ,  DE_I ,   DE_O ,  DE_P , KC_BSPC,
+     KC_TAB  , DE_Q ,  DE_W   ,  DE_E  ,   DE_R ,   DE_T ,                                        DE_Z,    DE_U ,  DE_I ,   DE_O ,  DE_P , DE_UDIA,
      CTL_ESC , DE_A ,  DE_S   ,  DE_D  ,   DE_F ,   DE_G ,                                        DE_H,    DE_J ,  DE_K ,   DE_L ,DE_ODIA, DE_ADIA,
-     KC_LSFT , DE_Y ,  DE_X   ,  DE_C  ,   DE_V ,   DE_B , DE_LBRC,KC_CAPS,     FKEYS  , DE_RBRC, DE_N,    DE_M ,DE_COMM, DE_DOT ,DE_MINS, KC_RSFT,
-                                 _______ , KC_LGUI, ALT_ENT, KC_SPC , NAV   ,       SYM    , KC_SPC , KC_RALT, KC_RGUI, KC_APP
+     KC_LSFT , DE_Y ,  DE_X   ,  DE_C  ,   DE_V ,   DE_B , DE_LBRC,KC_CAPS,     FKEYS  , DE_SS  , DE_N,    DE_M ,DE_COMM, DE_DOT ,DE_MINS, KC_RSFT,
+                                 _______ , KC_LGUI, ALT_ENT, KC_SPC , NAV,      SYM    , KC_BSPC ,KC_RALT, KC_RGUI, KC_APP
     ),
 
 /*
