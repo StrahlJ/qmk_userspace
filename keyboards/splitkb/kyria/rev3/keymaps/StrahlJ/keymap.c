@@ -21,7 +21,7 @@ enum layers {
     _NAV,
     _SYM,
     _FUNCTION,
-//    _ADJUST,
+    _GAMING
 };
 
 
@@ -30,7 +30,7 @@ enum layers {
 #define SYM      MO(_SYM)
 #define NAV      MO(_NAV)
 #define FKEYS    MO(_FUNCTION)
-//#define ADJUST   MO(_ADJUST)
+#define GAMING   TG(_GAMING)
 
 #define CTL_ESC  MT(MOD_LCTL, KC_ESC)
 #define CTL_QUOT MT(MOD_RCTL, KC_QUOTE)
@@ -61,7 +61,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      KC_TAB  , DE_Q ,  DE_W   ,  DE_E  ,   DE_R ,   DE_T ,                                        DE_Z,    DE_U ,  DE_I ,   DE_O ,  DE_P , DE_UDIA,
      CTL_ESC , DE_A ,  DE_S   ,  DE_D  ,   DE_F ,   DE_G ,                                        DE_H,    DE_J ,  DE_K ,   DE_L ,DE_ODIA, DE_ADIA,
      KC_LSFT , DE_Y ,  DE_X   ,  DE_C  ,   DE_V ,   DE_B , DE_LBRC,KC_CAPS,     FKEYS  , DE_SS  , DE_N,    DE_M ,DE_COMM, DE_DOT ,DE_MINS, KC_RSFT,
-                                 _______ , KC_LGUI, ALT_ENT, KC_SPC , NAV,      SYM    , KC_BSPC ,KC_RALT, KC_RGUI, KC_APP
+                                 GAMING , KC_LGUI, ALT_ENT, KC_SPC , NAV,      SYM    , KC_BSPC ,KC_RALT, KC_RGUI, KC_APP
     ),
 
 /*
@@ -113,7 +113,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |        |  F9  | F10  | F11  | F12  |      |                              |      |      |      |      |      |        |
  * |--------+------+------+------+------+------|                              |------+------+------+------+------+--------|
  * |        |  F5  |  F6  |  F7  |  F8  |      |                              |      | Shift| Ctrl |  Alt |  GUI |        |
- * |--------+------+------+------+------+------+-------------.  ,-------------+------+------+------+------+------+--------|
+ * |--------+------+------+------+------+------+-------------.  ,-------------+------+------+------+------+------+--------|vv			vvvvvvvvvv														
  * |        |  F1  |  F2  |  F3  |  F4  |      |      |      |  |      |      |      |      |      |      |      |        |
  * `----------------------+------+------+------+------+------|  |------+------+------+------+------+----------------------'
  *                        |      |      |      |      |      |  |      |      |      |      |      |
@@ -126,6 +126,27 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       _______,  KC_F1 ,  KC_F2 ,  KC_F3 ,  KC_F4 , _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
                                  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
     ),
+    
+// /*
+//  * Layer template
+//  *
+//  * ,-------------------------------------------.                              ,-------------------------------------------.
+//  * |   ESC  |      |   Q  |  W   |  E   |  R   |                              |      |      |      |      |      |        |
+//  * |--------+------+------+------+------+------|                              |------+------+------+------+------+--------|
+//  * |        |LShft |   A  |  S   |  D   |  F   |                              |      |      |      |      |      |        |
+//  * |--------+------+------+------+------+------+-------------.  ,-------------+------+------+------+------+------+--------|
+//  * |        | Cntr |      |      |      |  G   |      |      |  |      |      |      |      |      |      |      |        |
+//  * `----------------------+------+------+------+------+------|  |------+------+------+------+------+----------------------'
+//  *                        |      |      |      |      |      |  |      |      |      |      |      |
+//  *                        |      |      |      |      |      |  |      |      |      |      |      |
+//  *                        `----------------------------------'  `----------------------------------'
+//  */
+     [_GAMING] = LAYOUT(
+       KC_ESC, _______, DE_Q, DE_W, DE_E, DE_R,                                     _______, _______, KC_UP, _______, _______, _______,
+       _______, KC_LSFT, DE_A, DE_S, DE_D, DE_F,                                     _______, KC_LEFT, KC_DOWN, KC_RIGHT, _______, _______,
+       _______, KC_LCTL, _______, _______, DE_G, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
+                                  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
+     ),
 
 // /*
 //  * Layer template
@@ -187,9 +208,9 @@ bool oled_task_user(void) {
             case _FUNCTION:
                 oled_write_P(PSTR("Function\n"), false);
                 break;
-            /*case _ADJUST:
-                oled_write_P(PSTR("Adjust\n"), false);
-                break;*/
+            case _GAMING:
+                oled_write_P(PSTR("Gaming\n"), false);
+                break;
             default:
                 oled_write_P(PSTR("Undefined\n"), false);
         }
