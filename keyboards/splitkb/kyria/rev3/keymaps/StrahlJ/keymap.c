@@ -89,21 +89,21 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * Sym Layer: Numbers and symbols
  *
  * ,-------------------------------------------.                              ,-------------------------------------------.
- * |    `   |  1   |  2   |  3   |  4   |  5   |                              |   6  |  7   |  8   |  9   |  0   |   =    |
+ * |    ^   |  1   |  2   |  3   |  4   |  5   |                              |   6  |  7   |  8   |  9   |  0   |   ?    |
  * |--------+------+------+------+------+------|                              |------+------+------+------+------+--------|
- * |    ~   |  !   |  @   |  #   |  $   |  %   |                              |   ^  |  &   |  *   |  (   |  )   |   +    |
+ * |    °   |  !   |  "   |   §  |  $   |  %   |                              |   &  |  /   |  (   |  )   |  =   |   \    |
  * |--------+------+------+------+------+------+-------------.  ,-------------+------+------+------+------+------+--------|
- * |    |   |   \  |  :   |  ;   |  -   |  [   |  {   |      |  |      |   }  |   ]  |  _   |  ,   |  .   |  /   |   ?    |
+ * |    |   |   @  |  #   |  €   |   <  |  >   |   -  |  .   |  |      |      |   ~  |  {   |  [   |  ]   |  }   |   *    |
  * `----------------------+------+------+------+------+------|  |------+------+------+------+------+----------------------'
- *                        |      |      |      |      |      |  |      |      |      |      |      |
+ *                        |   '  |  ´   |  `   |   _  |  :   |  |      |      |   ;  |   ,  |      |
  *                        |      |      |      |      |      |  |      |      |      |      |      |
  *                        `----------------------------------'  `----------------------------------'
  */
     [_SYM] = LAYOUT(
-      KC_GRV ,   KC_1 ,   KC_2 ,   KC_3 ,   KC_4 ,   KC_5 ,                                       KC_6 ,   KC_7 ,   KC_8 ,   KC_9 ,   KC_0 , KC_EQL ,
-     KC_TILD , KC_EXLM,  KC_AT , KC_HASH,  KC_DLR, KC_PERC,                                     KC_CIRC, KC_AMPR, KC_ASTR, KC_LPRN, KC_RPRN, KC_PLUS,
-     KC_PIPE , KC_BSLS, KC_COLN, KC_SCLN, KC_MINS, KC_LBRC, KC_LCBR, _______, _______, KC_RCBR, KC_RBRC, KC_UNDS, KC_COMM,  KC_DOT, KC_SLSH, KC_QUES,
-                                 _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
+      DE_CIRC,   DE_1 ,   DE_2 ,   DE_3 ,   DE_4 ,   DE_5 ,                                       DE_6 ,   DE_7 ,   DE_8 ,   DE_9 ,   DE_0 , DE_QUES,
+     DE_DEG , DE_EXLM,  DE_DQUO , DE_SECT,  DE_DLR, DE_PERC,                                     DE_AMPR, DE_SLSH, DE_LPRN, DE_RPRN, DE_EQL, DE_BSLS,
+     DE_PIPE , DE_AT, DE_HASH, DE_EURO, DE_LABK, DE_RABK, DE_MINS, DE_DOT, _______, _______, DE_TILD, DE_LCBR, DE_LBRC,  DE_RBRC, DE_RCBR, DE_ASTR,
+                                 DE_QUOT, DE_ACUT, DE_GRV, DE_UNDS, DE_COLN, _______, _______, DE_SCLN, DE_COMM, _______
     ),
 
 /*
