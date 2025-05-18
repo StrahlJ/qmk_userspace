@@ -42,6 +42,7 @@ enum layers {
 #define ALT_ENT  MT(MOD_LALT, KC_ENT)
 #define OSLSFT   OSM(MOD_LSFT)
 #define OSRSFT   OSM(MOD_RSFT)
+#define OSCTL    OSM(MOD_LCTL)
 
 // Note: LAlt/Enter (ALT_ENT) is not the same thing as the keyboard shortcut Alt+Enter.
 // The notation `mod/tap` denotes a key that activates the modifier `mod` when held down, and
@@ -55,9 +56,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * ,-------------------------------------------.                              ,-------------------------------------------.
  * |  Tab   |   Q  |   W  |   E  |   R  |   T  |                              |   Z  |   U  |   I  |   O  |   P  |  Ü     |
  * |--------+------+------+------+------+------|                              |------+------+------+------+------+--------|
- * |Ctrl/Esc|   A  |   S  |   D  |   F  |   G  |                              |   H  |   J  |   K  |   L  |   Ö  |   Ä    |
+ * |Ctrl/Esc|   A  |   S  |   D  |   F  |   G  |                              |   H  |   J  |   K  |   L  |Ö(ÄÜ) |  Ctrl  |
  * |--------+------+------+------+------+------+-------------.  ,-------------+------+------+------+------+------+--------|
- * | LShift |   Y  |   X  |   C  |   V  |   B  |  (   |  {   |  |   /  |   [  |   N  |   M  | , ;  | . :  | -  _ | RShift |
+ * | LShift |   Y  |   X  |   C  |   V  |   B  |  (   |  [   |  |   /  |   {  |   N  |   M  | , ;  | . :  | -  _ | RShift |
  * `----------------------+------+------+------+------+------|  |------+------+------+------+------+----------------------'
  *                        | Nav  | LGUI | LAlt/| Space| Sym2 |  | Sym1 | BKSP | RGUI | ALTGr| Menu |
  *                        |      |      | Enter|      |      |  |      |      |      |      |      |
@@ -65,8 +66,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  */
     [_QWERTZ] = LAYOUT(
      KC_TAB  , DE_Q ,  DE_W   ,  DE_E  ,   DE_R ,   DE_T ,                                            DE_Z,    DE_U ,  DE_I ,   DE_O ,  DE_P , DE_UDIA,
-     CTL_ESC , DE_A ,  DE_S   ,  DE_D  ,   DE_F ,   DE_G ,                                            DE_H,    DE_J ,  DE_K ,   DE_L ,DE_ODIA, DE_ADIA,
-     OSLSFT , DE_Y ,  DE_X   ,  DE_C  ,   DE_V ,   DE_B , DE_LPRN,   DE_LCBR,    DE_SLSH  , DE_LBRC , DE_N,    DE_M ,DE_COMM, DE_DOT ,DE_MINS, OSRSFT,
+     CTL_ESC , DE_A ,  DE_S   ,  DE_D  ,   DE_F ,   DE_G ,                                            DE_H,    DE_J ,  DE_K ,   DE_L ,DE_ODIA, OSCTL,
+     OSLSFT , DE_Y ,  DE_X   ,  DE_C  ,   DE_V ,   DE_B , DE_LPRN,   DE_LBRC,    DE_SLSH  , DE_LCBR , DE_N,    DE_M ,DE_COMM, DE_DOT ,DE_MINS, OSRSFT,
                                  NAV    , KC_LGUI, ALT_ENT, KC_SPC , SYM2 ,      SYM1    , KC_BSPC ,KC_RGUI, KC_RALT, KC_APP
     ),
 
@@ -85,7 +86,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *                        `----------------------------------'  `----------------------------------'
  */
     [_NAV] = LAYOUT(
-      _______, MOUSE, FKEYS  , KC_CAPS, _______ , _______,                                     KC_PGDN, KC_PGUP, KC_HOME,   KC_END,  KC_VOLU, KC_DEL,
+      QK_LLCK, MOUSE, FKEYS  , KC_CAPS, _______ , _______,                                     KC_PGDN, KC_PGUP, KC_HOME,   KC_END,  KC_VOLU, KC_DEL,
       _______, KC_LGUI, KC_LALT, KC_LCTL, KC_LSFT, _______,                                     KC_LEFT, KC_DOWN, KC_UP, KC_RGHT, KC_VOLD, KC_INS,
       _______, _______, _______, _______, _______, _______, _______, KC_SCRL, GAMING, _______,KC_PAUSE, KC_MPRV, KC_MPLY, KC_MNXT, KC_MUTE, KC_PSCR,
                                  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
@@ -95,11 +96,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * Symbol Layer 1: Numbers and symbols
  *
  * ,-------------------------------------------.                              ,-------------------------------------------.
- * |        |  1   |  2   |  3   |  4   |  5   |                              |   6  |  7   |  8   |  9   |  0   |   %    |
+ * | Lock   |  1   |  2   |  3   |  4   |  5   |                              |   6  |  7   |  8   |  9   |  0   |   %    |
  * |--------+------+------+------+------+------|                              |------+------+------+------+------+--------|
  * |        |  /   |  *   |   -  |  +   |  ?   |                              |   !  |  .   |  ,   |  =   |  &  |   \     |
  * |--------+------+------+------+------+------+-------------.  ,-------------+------+------+------+------+------+--------|
- * |        |   §  |  €   |  $   |   @  |  _   |   #  | Lock |  |   ´  | `    |   |  |  :   |  ;   |  ^   |   °  |  ~     |
+ * |        |   §  |  €   |  $   |   @  |  _   |   #  |      |  |   ´  | `    |   |  |  :   |  ;   |  ^   |   °  |  ~     |
  * `----------------------+------+------+------+------+------|  |------+------+------+------+------+----------------------'
  *                        |      |      |      |      |      |  |      |      |      |      |      |
  *                        |      |      |      |      |      |  |      |      |      |      |      |
@@ -218,18 +219,36 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 //     ),
 };
 
+// Caps Word
+bool caps_word_press_user(uint16_t keycode) {
+    switch (keycode) {
+        // Keycodes that continue Caps Word, with shift applied.
+        case DE_A ... DE_Z:
+        case DE_MINS:
+            add_weak_mods(MOD_BIT(KC_LSFT));  // Apply shift to next key.
+            return true;
+
+        // Keycodes that continue Caps Word, without shifting.
+        case DE_1 ... DE_0:
+        case KC_BSPC:
+        case KC_DEL:
+        case DE_UNDS:
+            return true;
+
+        default:
+            return false;  // Deactivate Caps Word.
+    }
+}
 
 // Combos
 const uint16_t PROGMEM sz_combo[] = {DE_S, DE_Z, COMBO_END};
-const uint16_t PROGMEM ae_combo[] = {DE_A, DE_E, COMBO_END};
-const uint16_t PROGMEM oe_combo[] = {DE_O, DE_E, COMBO_END};
-const uint16_t PROGMEM ue_combo[] = {DE_U, DE_E, COMBO_END};
+const uint16_t PROGMEM aoe_combo[] = {DE_A, DE_ODIA, COMBO_END};
+const uint16_t PROGMEM uoe_combo[] = {DE_U, DE_ODIA, COMBO_END};
 
 combo_t key_combos[] = {
     COMBO(sz_combo, DE_SS),
-    COMBO(ae_combo, DE_ADIA),
-    COMBO(oe_combo, DE_ODIA),
-    COMBO(ue_combo, DE_UDIA),
+    COMBO(aoe_combo, DE_ADIA),
+    COMBO(uoe_combo, DE_UDIA),
 };
 
 // Overides
