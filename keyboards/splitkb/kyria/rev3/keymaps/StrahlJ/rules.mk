@@ -5,3 +5,6 @@ RGBLIGHT_ENABLE = no      # Enable keyboard RGB underglow
 CONVERT_TO=liatris
 CAPS_WORD_ENABLE = yes
 MOUSEKEY_ENABLE = yes
+LAYER_LOCK_ENABLE = yes
+COMBO_ENABLE = yes
+KEY_OVERRIDE_ENABLE = yes
