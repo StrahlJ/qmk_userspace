@@ -15,6 +15,8 @@
  */
 #include QMK_KEYBOARD_H
 #include "keymap_german.h"
+#include "sendstring_german.h"
+#include "autocorrect_data.h"
 
 enum layers {
     _QWERTZ = 0,
@@ -30,9 +32,9 @@ enum layers {
 // Aliases for readability
 #define QWERTZ   DF(_QWERTZ)
 #define SYM1     OSL(_SYM)
-#define SYM2     OSL(_BRACS)
+#define BRACS    OSL(_BRACS)
 #define NAV      MO(_NAV)
-#define FKEYS    MO(_FUNCTION)
+#define FKEYS    OSL(_FUNCTION)
 #define GAMING   TG(_GAMING)
 #define MOUSE	 TG(_MOUSE)
 
@@ -44,6 +46,7 @@ enum layers {
 #define OSRSFT   OSM(MOD_RSFT)
 #define OSCTL    OSM(MOD_LCTL)
 
+
 // Note: LAlt/Enter (ALT_ENT) is not the same thing as the keyboard shortcut Alt+Enter.
 // The notation `mod/tap` denotes a key that activates the modifier `mod` when held down, and
 // produces the key `tap` when tapped (i.e. pressed and released).
@@ -54,28 +57,28 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * Base Layer: QWERTZ
  *
  * ,-------------------------------------------.                              ,-------------------------------------------.
- * |  Tab   |   Q  |   W  |   E  |   R  |   T  |                              |   Z  |   U  |   I  |   O  |   P  |  Ü     |
+ * |  Tab   |   Q  |   W  |   E  |   R  |   T  |                              |   Z  |   U  |   I  |   O  |   P  |  Lead  |
  * |--------+------+------+------+------+------|                              |------+------+------+------+------+--------|
  * |Ctrl/Esc|   A  |   S  |   D  |   F  |   G  |                              |   H  |   J  |   K  |   L  |Ö(ÄÜ) |  Ctrl  |
  * |--------+------+------+------+------+------+-------------.  ,-------------+------+------+------+------+------+--------|
  * | LShift |   Y  |   X  |   C  |   V  |   B  |  (   |  [   |  |   /  |   {  |   N  |   M  | , ;  | . :  | -  _ | RShift |
  * `----------------------+------+------+------+------+------|  |------+------+------+------+------+----------------------'
- *                        | Nav  | LGUI | LAlt/| Space| Sym2 |  | Sym1 | BKSP | RGUI | ALTGr| Menu |
+ *                        | Nav  | LGUI | LAlt/| Space|Bracs |  | Sym1 | BKSP | RGUI | ALTGr| Menu |
  *                        |      |      | Enter|      |      |  |      |      |      |      |      |
  *                        `----------------------------------'  `----------------------------------'
  */
     [_QWERTZ] = LAYOUT(
-     KC_TAB  , DE_Q ,  DE_W   ,  DE_E  ,   DE_R ,   DE_T ,                                            DE_Z,    DE_U ,  DE_I ,   DE_O ,  DE_P , DE_UDIA,
+     KC_TAB  , DE_Q ,  DE_W   ,  DE_E  ,   DE_R ,   DE_T ,                                            DE_Z,    DE_U ,  DE_I ,   DE_O ,  DE_P , QK_LEAD,
      CTL_ESC , DE_A ,  DE_S   ,  DE_D  ,   DE_F ,   DE_G ,                                            DE_H,    DE_J ,  DE_K ,   DE_L ,DE_ODIA, OSCTL,
      OSLSFT , DE_Y ,  DE_X   ,  DE_C  ,   DE_V ,   DE_B , DE_LPRN,   DE_LBRC,    DE_SLSH  , DE_LCBR , DE_N,    DE_M ,DE_COMM, DE_DOT ,DE_MINS, OSRSFT,
-                                 NAV    , KC_LGUI, ALT_ENT, KC_SPC , SYM2 ,      SYM1    , KC_BSPC ,KC_RGUI, KC_RALT, KC_APP
+                                 NAV    , KC_LGUI, ALT_ENT, KC_SPC , BRACS ,      SYM1    , KC_BSPC ,KC_RGUI, KC_RALT, KC_APP
     ),
 
 /*
  * Nav Layer: Media, navigation
  *
  * ,-------------------------------------------.                              ,-------------------------------------------.
- * |        | Mouse| Func |      |      |      |                              | PgDwn| PgUp | Home | End  | VolUp| Delete |
+ * |        | Mouse| Func | AC   |      |      |                              | PgDwn| PgUp | Home | End  | VolUp| Delete |
  * |--------+------+------+------+------+------|                              |------+------+------+------+------+--------|
  * |        |  GUI |  Alt | Ctrl | Shift|      |                              |   ←  |  ↓   |   ↑  |   →  | VolDn| Insert |
  * |--------+------+------+------+------+------+-------------.  ,-------------+------+------+------+------+------+--------|
@@ -86,7 +89,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *                        `----------------------------------'  `----------------------------------'
  */
     [_NAV] = LAYOUT(
-      QK_LLCK, MOUSE, FKEYS  , KC_CAPS, _______ , _______,                                     KC_PGDN, KC_PGUP, KC_HOME,   KC_END,  KC_VOLU, KC_DEL,
+      QK_LLCK, MOUSE, FKEYS  , KC_CAPS, AC_TOGG , _______,                                     KC_PGDN, KC_PGUP, KC_HOME,   KC_END,  KC_VOLU, KC_DEL,
       _______, KC_LGUI, KC_LALT, KC_LCTL, KC_LSFT, _______,                                     KC_LEFT, KC_DOWN, KC_UP, KC_RGHT, KC_VOLD, KC_INS,
       _______, _______, _______, _______, _______, _______, _______, KC_SCRL, GAMING, _______,KC_PAUSE, KC_MPRV, KC_MPLY, KC_MNXT, KC_MUTE, KC_PSCR,
                                  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
@@ -138,11 +141,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * Function Layer: Function keys
  *
  * ,-------------------------------------------.                              ,-------------------------------------------.
- * |        |  F9  | F10  | F11  | F12  |      |                              |      |      |      |      |      |        |
+ * |        |      |      |      |      |      |                              |      |  F9  | F10  | F11  | F12  |        |
  * |--------+------+------+------+------+------|                              |------+------+------+------+------+--------|
- * |        |  F5  |  F6  |  F7  |  F8  |      |                              |      | Shift| Ctrl |  Alt |  GUI |        |
+ * |        | Shift| Ctrl |  Alt |  GUI |      |                              |      |  F5  |  F6  |  F7  |  F8  |        |
  * |--------+------+------+------+------+------+-------------.  ,-------------+------+------+------+------+------+--------|
- * |        |  F1  |  F2  |  F3  |  F4  |      |      |      |  |      |      |      |      |      |      |      |        |
+ * |        |      |      |      |      |      |      |      |  |      |      |      |  F1  |  F2  |  F3  |  F4  |        |
  * `----------------------+------+------+------+------+------|  |------+------+------+------+------+----------------------'
  *                        |      |      |      |      |      |  |      |      |      |      |      |
  *                        |      |      |      |      |      |  |      |      |      |      |      |
@@ -159,9 +162,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 //  * Gaming Layer
 //  *
 //  * ,-------------------------------------------.                              ,-------------------------------------------.
-//  * |   ESC  |      |   Q  |  W   |  E   |  R   |                              |      |      |      |      |      |        |
+//  * |   ESC  |      |   Q  |  W   |  E   |  R   |                              |      |      | Up   |      |      |        |
 //  * |--------+------+------+------+------+------|                              |------+------+------+------+------+--------|
-//  * |        |LShft |   A  |  S   |  D   |  F   |                              |      |      |      |      |      |        |
+//  * |        |LShft |   A  |  S   |  D   |  F   |                              |      | Left | Down | Right|      |        |
 //  * |--------+------+------+------+------+------+-------------.  ,-------------+------+------+------+------+------+--------|
 //  * |        | Cntr |      |      |      |  G   |      |      |  |      |      |      |      |      |      |      |        |
 //  * `----------------------+------+------+------+------+------|  |------+------+------+------+------+----------------------'
@@ -180,7 +183,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 //  * Mouse Layer
 //  *
 //  * ,-------------------------------------------.                              ,-------------------------------------------.
-//  * |        |      |      |      |      |      |                              |      |      |      |      |      |        |
+//  * |        |      |      |      |      |      |                              |WHL L | WHL D| WHL U|WHL R|      |        |
 //  * |--------+------+------+------+------+------|                              |------+------+------+------+------+--------|
 //  * |        |      | RBTN | MBTN | LBTN |      |                              |Left  | Down |  Up  | Rght |      |        |
 //  * |--------+------+------+------+------+------+-------------.  ,-------------+------+------+------+------+------+--------|
@@ -259,6 +262,13 @@ const key_override_t *key_overrides[] = {
 	&delete_key_override
 };
 
+// Leader
+void leader_end_user(void) {
+    if (leader_sequence_one_key(DE_Q)) {
+        SEND_STRING("Leader Macros are great!");
+    }
+}
+
 /* The default OLED and rotary encoder code can be found at the bottom of qmk_firmware/keyboards/splitkb/kyria/rev1/rev1.c
  * These default settings can be overriden by your own settings in your keymap.c
  * For your convenience, here's a copy of those settings so that you can uncomment them if you wish to apply your own modifications.
@@ -273,20 +283,21 @@ bool oled_task_user(void) {
     if (is_keyboard_master()) {
         // QMK Logo and version information
         // clang-format off
-        static const char PROGMEM qmk_logo[] = {
+        /*static const char PROGMEM qmk_logo[] = {
             0x80,0x81,0x82,0x83,0x84,0x85,0x86,0x87,0x88,0x89,0x8a,0x8b,0x8c,0x8d,0x8e,0x8f,0x90,0x91,0x92,0x93,0x94,
             0xa0,0xa1,0xa2,0xa3,0xa4,0xa5,0xa6,0xa7,0xa8,0xa9,0xaa,0xab,0xac,0xad,0xae,0xaf,0xb0,0xb1,0xb2,0xb3,0xb4,
             0xc0,0xc1,0xc2,0xc3,0xc4,0xc5,0xc6,0xc7,0xc8,0xc9,0xca,0xcb,0xcc,0xcd,0xce,0xcf,0xd0,0xd1,0xd2,0xd3,0xd4,0};
         // clang-format on
 
-        oled_write_P(qmk_logo, false);
+        oled_write_P(qmk_logo, false);*/
+
         oled_write_P(PSTR("Kyria rev3.1\n\n"), false);
 
         // Host Keyboard Layer Status
         oled_write_P(PSTR("Layer: "), false);
         switch (get_highest_layer(layer_state|default_layer_state)) {
             case _QWERTZ:
-                oled_write_P(PSTR("QWERTZ\n"), false);
+                oled_write_P(PSTR("Default\n"), false);
                 break;
             case _NAV:
                 oled_write_P(PSTR("Navigation\n"), false);
@@ -309,6 +320,8 @@ bool oled_task_user(void) {
             default:
                 oled_write_P(PSTR("Undefined\n"), false);
         }
+
+        oled_write_P(autocorrect_is_enabled() ? PSTR("Autocorrect\n") : PSTR("           \n"), false);
 
         // Write host Keyboard LED Status to OLEDs
         led_t led_usb_state = host_keyboard_led_state();
