@@ -46,6 +46,13 @@ enum layers {
 #define OSRSFT   OSM(MOD_RSFT)
 #define OSCTL    OSM(MOD_LCTL)
 
+enum unicode_names {
+    SNEK,
+};
+
+const uint32_t PROGMEM unicode_map[] = {
+    [SNEK]  = 0x1F40D,
+};
 
 // Note: LAlt/Enter (ALT_ENT) is not the same thing as the keyboard shortcut Alt+Enter.
 // The notation `mod/tap` denotes a key that activates the modifier `mod` when held down, and
@@ -78,11 +85,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * Nav Layer: Media, navigation
  *
  * ,-------------------------------------------.                              ,-------------------------------------------.
- * |        | Mouse| Func | AC   |      |      |                              | PgDwn| PgUp | Home | End  | VolUp| Delete |
+ * |        | Mouse| Func |C Lck | AC   |      |                              | PgDwn| PgUp | Home | End  | VolUp| Delete |
  * |--------+------+------+------+------+------|                              |------+------+------+------+------+--------|
- * |        |  GUI |  Alt | Ctrl | Shift|      |                              |   ←  |  ↓   |   ↑  |   →  | VolDn| Insert |
+ * |        |      |      |N Lck |      | Pwr  |                              |   ←  |  ↓   |   ↑  |   →  | VolDn| Insert |
  * |--------+------+------+------+------+------+-------------.  ,-------------+------+------+------+------+------+--------|
- * |        |      |      |      |      |      |      |ScLck |  |Gaming|      | Pause|M Prev|M Play|M Next|VolMut| PrtSc  |
+ * |        |Reboot|ClrROM| Sclck|      |      |      |      |  |Gaming|      | M Stp|M Play|M Prv |M Nxt |VolMut| PrtSc  |
  * `----------------------+------+------+------+------+------|  |------+------+------+------+------+----------------------'
  *                        |      |      |      |      |      |  |      |      |      |      |      |
  *                        |      |      |      |      |      |  |      |      |      |      |      |
@@ -90,8 +97,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  */
     [_NAV] = LAYOUT(
       QK_LLCK, MOUSE, FKEYS  , KC_CAPS, AC_TOGG , _______,                                     KC_PGDN, KC_PGUP, KC_HOME,   KC_END,  KC_VOLU, KC_DEL,
-      _______, KC_LGUI, KC_LALT, KC_LCTL, KC_LSFT, _______,                                     KC_LEFT, KC_DOWN, KC_UP, KC_RGHT, KC_VOLD, KC_INS,
-      _______, _______, _______, _______, _______, _______, _______, KC_SCRL, GAMING, _______,KC_PAUSE, KC_MPRV, KC_MPLY, KC_MNXT, KC_MUTE, KC_PSCR,
+      _______, _______, _______, KC_NUM, _______, KC_PWR,                                     KC_LEFT, KC_DOWN, KC_UP, KC_RGHT, KC_VOLD, KC_INS,
+      _______, QK_RBT, EE_CLR, KC_SCRL, _______, _______, _______, _______, GAMING, _______,KC_MSTP, KC_MPLY, KC_MPRV, KC_MNXT, KC_MUTE, KC_PSCR,
                                  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
     ),
 
@@ -254,19 +261,43 @@ combo_t key_combos[] = {
     COMBO(uoe_combo, DE_UDIA),
 };
 
-// Overides
+// Overrides
 const key_override_t delete_key_override = ko_make_basic(MOD_MASK_SHIFT, KC_BSPC, KC_DEL);
+const key_override_t back_ko = ko_make_basic(MOD_MASK_CTRL, KC_LEFT, KC_WBAK);
+const key_override_t fwd_ko = ko_make_basic(MOD_MASK_CTRL, KC_RIGHT, KC_WFWD);
+const key_override_t refresh_ko = ko_make_basic(MOD_MASK_CTRL, KC_DOWN, KC_WREF);
+const key_override_t br_up_ko = ko_make_basic(MOD_MASK_CTRL, KC_VOLU, KC_BRIU);
+const key_override_t br_dwn_ko = ko_make_basic(MOD_MASK_CTRL, KC_VOLD, KC_BRID);
 
 // This globally defines all key overrides to be used
 const key_override_t *key_overrides[] = {
-	&delete_key_override
+	&delete_key_override,
+    &back_ko,
+    &fwd_ko,
+    &refresh_ko,
+    &br_up_ko,
+    &br_dwn_ko
 };
 
 // Leader
 void leader_end_user(void) {
-    if (leader_sequence_one_key(DE_Q)) {
-        SEND_STRING("Leader Macros are great!");
+    if (leader_sequence_two_keys(KC_L, KC_K)) {
+        SEND_STRING("loadkeys de-latin1");
+    } else if (leader_sequence_two_keys(DE_M, DE_R)) {
+        tap_code16(DM_REC1);
+    } else if (leader_sequence_three_keys(DE_M, DE_M, DE_R)) {
+        tap_code16(DM_REC2);
+    } else if (leader_sequence_two_keys(DE_M, DE_P)) {
+        tap_code16(DM_PLY1);
+    } else if (leader_sequence_three_keys(DE_M, DE_M, DE_P)) {
+        tap_code16(DM_PLY2);
+    } else if (leader_sequence_two_keys(DE_M, DE_S)) {
+        tap_code16(DM_RSTP);
+    } else if (leader_sequence_two_keys(DE_S, DE_S)) {
+        tap_code16(UM(SNEK));
     }
+
+
 }
 
 /* The default OLED and rotary encoder code can be found at the bottom of qmk_firmware/keyboards/splitkb/kyria/rev1/rev1.c
@@ -289,9 +320,9 @@ bool oled_task_user(void) {
             0xc0,0xc1,0xc2,0xc3,0xc4,0xc5,0xc6,0xc7,0xc8,0xc9,0xca,0xcb,0xcc,0xcd,0xce,0xcf,0xd0,0xd1,0xd2,0xd3,0xd4,0};
         // clang-format on
 
-        oled_write_P(qmk_logo, false);*/
+        oled_write_P(qmk_logo, false);
 
-        oled_write_P(PSTR("Kyria rev3.1\n\n"), false);
+        oled_write_P(PSTR("Kyria rev3.1\n\n"), false);*/
 
         // Host Keyboard Layer Status
         oled_write_P(PSTR("Layer: "), false);
@@ -321,13 +352,29 @@ bool oled_task_user(void) {
                 oled_write_P(PSTR("Undefined\n"), false);
         }
 
+        uint8_t cosm = get_oneshot_mods();
+        oled_write_P(PSTR("Oneshot: "), false);
+        oled_write_P((cosm & MOD_MASK_SHIFT) ? PSTR("SHIFT ") : PSTR("      "), false);
+        oled_write_P((cosm & MOD_MASK_CTRL) ? PSTR("CTRL \n") : PSTR("     \n"), false);
+
+        oled_write_P(is_caps_word_on() ? PSTR("Caps Wrd ") : PSTR("         "), false);
+        oled_write_P(leader_sequence_active() ? PSTR("Leader \n\n") : PSTR("       \n\n"), false);
+
         oled_write_P(autocorrect_is_enabled() ? PSTR("Autocorrect\n") : PSTR("           \n"), false);
 
         // Write host Keyboard LED Status to OLEDs
         led_t led_usb_state = host_keyboard_led_state();
         oled_write_P(led_usb_state.num_lock    ? PSTR("NUMLCK ") : PSTR("       "), false);
         oled_write_P(led_usb_state.caps_lock   ? PSTR("CAPLCK ") : PSTR("       "), false);
-        oled_write_P(led_usb_state.scroll_lock ? PSTR("SCRLCK ") : PSTR("       "), false);
+        oled_write_P(led_usb_state.scroll_lock ? PSTR("SCRLCK \n") : PSTR("       \n"), false);
+
+        static char wpm_str[4];
+
+        sprintf(wpm_str, "%03d", get_current_wpm());
+        oled_write_P(PSTR("WPM: "), false);
+        oled_write(wpm_str, false);
+
+
     } else {
         // clang-format off
         static const char PROGMEM kyria_logo[] = {
